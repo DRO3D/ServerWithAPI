@@ -1,7 +1,15 @@
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ServerWithAPI;
 using ServerWithAPI.Controllers;
+using ServerWithAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = "workstation id=MyDBForChat.mssql.somee.com;packet size=4096;user id=dro3d_rus;pwd=vbif4fvbif4f;data source=MyDBForChat.mssql.somee.com;persist security info=False;initial catalog=MyDBForChat";
+
+builder.Services.AddDbContext<AccountsContext>(opt =>
+    opt.UseInMemoryDatabase("AccountsList"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -23,7 +31,27 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+/*
+app.MapPost("api/Values/{email}&{password}",
+    async (string email, string password, ValuesController loginValue) =>
+    {
+        var dog = loginValue.Login(email, password);
+        return dog.Result;
+    });
+*/
+app.MapPost("api/Values/{email}/{password}", 
+    async (string email, string password, ValuesController loginValue) =>
+{
+    var result = loginValue.Login(email, password);
+    return result.Result;
+});
 
+app.MapPost("api/Values/Regist/{email}/{password}/{name}",
+    async (string email, string password, string name, ValuesController loginValue) =>
+    {
+        var result = loginValue.Register(email, password, name);
+        return result.Result;
+    });
 
 app.MapHub<ChatHub>("/chatHub");
 app.MapControllerRoute(
