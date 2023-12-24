@@ -6,7 +6,7 @@ using ServerWithAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = "workstation id=MyDBForChat.mssql.somee.com;packet size=4096;user id=dro3d_rus;pwd=vbif4fvbif4f;data source=MyDBForChat.mssql.somee.com;persist security info=False;initial catalog=MyDBForChat";
+var connectionString = "";
 
 builder.Services.AddDbContext<AccountsContext>(opt =>
     opt.UseInMemoryDatabase("AccountsList"));
