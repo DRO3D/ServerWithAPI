@@ -11,13 +11,9 @@ namespace ServerWithAPI.Controllers
 
         public async Task SendUserMessage(string user, string message)
         {
-            await Clients.User(user).SendAsync(message);
+            await Clients.User(user).SendAsync("LocalReceive", message);
         }
-
-        public async Task SendGroupMessage(string user, string message)
-        {
-
-        }
+        
     }
 
 }
